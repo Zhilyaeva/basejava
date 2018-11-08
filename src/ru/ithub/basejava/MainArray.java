@@ -53,13 +53,7 @@ public class MainArray {
                 case "update":
                     r = new Resume();
                     r.setUuid(uuid);
-
-                    if (ARRAY_STORAGE.get(uuid) != null) {
-                        ARRAY_STORAGE.update(r);
-                        System.out.println("Resume was updated");
-                    } else {
-                        System.out.println("Resume was not found");
-                    }
+                    ARRAY_STORAGE.update(r);
                     break;
                 default:
                     System.out.println("Неверная команда.");

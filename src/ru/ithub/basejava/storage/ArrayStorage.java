@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
 
     private int size;
 
@@ -52,8 +52,9 @@ public class ArrayStorage {
 
         if (position >= 0) {
             storage[position] = resume;
+            System.out.println("Resume was updated");
         } else {
-            System.out.println("Resume was not updated");
+            System.out.println("Resume was not found");
         }
     }
 
