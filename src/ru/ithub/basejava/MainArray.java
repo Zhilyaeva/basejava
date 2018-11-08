@@ -1,11 +1,12 @@
+package ru.ithub.basejava;
+
+import ru.ithub.basejava.model.Resume;
+import ru.ithub.basejava.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Interactive test for ArrayStorage implementation
- * (just run, no need to understand)
- */
 public class MainArray {
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
@@ -13,7 +14,7 @@ public class MainArray {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | update uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -32,7 +33,7 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
@@ -49,6 +50,17 @@ public class MainArray {
                     break;
                 case "exit":
                     return;
+                case "update":
+                    r = new Resume();
+                    r.setUuid(uuid);
+
+                    if (ARRAY_STORAGE.get(uuid) != null) {
+                        ARRAY_STORAGE.update(r);
+                        System.out.println("Resume was updated");
+                    } else {
+                        System.out.println("Resume was not found");
+                    }
+                    break;
                 default:
                     System.out.println("Неверная команда.");
                     break;
@@ -56,7 +68,7 @@ public class MainArray {
         }
     }
 
-    static void printAll() {
+    private static void printAll() {
         Resume[] all = ARRAY_STORAGE.getAll();
         System.out.println("----------------------------");
         if (all.length == 0) {
