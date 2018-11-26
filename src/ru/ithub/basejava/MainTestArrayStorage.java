@@ -1,10 +1,11 @@
 package ru.ithub.basejava;
 
 import ru.ithub.basejava.model.Resume;
-import ru.ithub.basejava.storage.ArrayStorage;
+import ru.ithub.basejava.storage.SortedArrayStorage;
+import ru.ithub.basejava.storage.Storage;
 
 public class MainTestArrayStorage {
-    private static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -24,6 +25,7 @@ public class MainTestArrayStorage {
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         ARRAY_STORAGE.update(r3);
+        System.out.println("r3 successfully updated");
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
