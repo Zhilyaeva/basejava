@@ -1,21 +1,24 @@
 package ru.ithub.basejava;
 
 import ru.ithub.basejava.model.Resume;
-import ru.ithub.basejava.storage.SortedArrayStorage;
+import ru.ithub.basejava.storage.ArrayStorage;
 import ru.ithub.basejava.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Test for ru.javawebinar.basejava.storage.ArrayStorage
+ */
 public class MainArray {
-    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | update uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | update uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -33,9 +36,13 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume();
-                    r.setUuid(uuid);
+                    r = new Resume(uuid);
                     ARRAY_STORAGE.save(r);
+                    printAll();
+                    break;
+                case "update":
+                    r = new Resume(uuid);
+                    ARRAY_STORAGE.update(r);
                     printAll();
                     break;
                 case "delete":
@@ -51,12 +58,6 @@ public class MainArray {
                     break;
                 case "exit":
                     return;
-                case "update":
-                    r = new Resume();
-                    r.setUuid(uuid);
-                    ARRAY_STORAGE.update(r);
-                    printAll();
-                    break;
                 default:
                     System.out.println("Неверная команда.");
                     break;
@@ -64,7 +65,7 @@ public class MainArray {
         }
     }
 
-    private static void printAll() {
+    static void printAll() {
         Resume[] all = ARRAY_STORAGE.getAll();
         System.out.println("----------------------------");
         if (all.length == 0) {

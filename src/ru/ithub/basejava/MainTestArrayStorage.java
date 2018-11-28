@@ -1,19 +1,18 @@
 package ru.ithub.basejava;
 
 import ru.ithub.basejava.model.Resume;
-import ru.ithub.basejava.storage.SortedArrayStorage;
-import ru.ithub.basejava.storage.Storage;
+import ru.ithub.basejava.storage.ArrayStorage;
 
+/**
+ * Test ru.javawebinar.basejava.storage.ArrayStorage
+ */
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume();
-        r1.setUuid("uuid1");
-        Resume r2 = new Resume();
-        r2.setUuid("uuid2");
-        Resume r3 = new Resume();
-        r3.setUuid("uuid3");
+        Resume r1 = new Resume("uuid1");
+        Resume r2 = new Resume("uuid2");
+        Resume r3 = new Resume("uuid3");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
@@ -24,9 +23,6 @@ public class MainTestArrayStorage {
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        ARRAY_STORAGE.update(r3);
-        System.out.println("r3 successfully updated");
-
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
         printAll();
@@ -36,7 +32,7 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + ARRAY_STORAGE.size());
     }
 
-    private static void printAll() {
+    static void printAll() {
         System.out.println("\nGet All");
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
